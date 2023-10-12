@@ -8,20 +8,19 @@ in order to use uuiid
 """
 class BaseModel:
     def __init__(self, *_, **kwargs):
+        
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
         if kwargs:
             for key, value in kwargs.items():
-                if '__class__' in kwargs:
-                    continue
-
-                if key in ['created_at', 'updated_at']:
-                    value = datetime.datetime.strptime('value', '%Y-%m-%d %H:%M:%S.%f')
-
-                setattr(self, key, value)
-
+                if key == '__class__':
+                    self.__class__.__name__ = value
+                elif key in ['created_at', 'updated_at']:
+                    self.key = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                else:
+                    setattr(self, key, value)
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now().isoformat()
-            self.updated_at = datetime.datetime.now().isoformat()
             models.storage.new(self)
         
     def __str__(self):
@@ -32,7 +31,8 @@ class BaseModel:
         updates the public instance attribute updated_at with the current datetime
         """
         
-        self.updated_at = datetime.datetime.now().isoformat()
+        self.updated_at = datetime.datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     
@@ -41,8 +41,16 @@ class BaseModel:
         """
          returns a dictionary containing all keys/values of __dict__ of the instance
         """
-        return {
-            **self.__dict__,
-            '__class__': self.__class__.__name__,
+        # return {
+        #     **self.__dict__,
+        #     '__class__': self.__class__.__name__,
 
-        }
+        # }
+        dict_array = {}
+        for key, value in self.__dict__.items():
+            if key != 'created_at' and key != 'updated_at':
+                dict_array[key] = value
+        dict_array['__class__'] = self.__class__.__name__
+        dict_array['created_at'] = self.created_at.isoformat()
+        dict_array['updated_at'] = self.updated_at.isoformat()
+        return dict_array
