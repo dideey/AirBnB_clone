@@ -25,5 +25,10 @@ class FileStorage:
         try:
              with open(self.__file_path, mode="r", encoding="UTF8") as file:
                 jdata = json.load(file)
+                for value in jdata.values():
+                    myModel = value["__class__"]
+                    myModel = eval(myModel)
+                    obj = myModel(**value)
+                    self.new(obj)
         except Exception:
             pass

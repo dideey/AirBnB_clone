@@ -16,8 +16,10 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == '__class__':
                     self.__class__.__name__ = value
-                elif key in ['created_at', 'updated_at']:
-                    self.key = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key == 'created_at':
+                    self.created_at = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key == 'updated_at':
+                    self.updated_at = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, key, value)
         else:
