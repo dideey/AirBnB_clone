@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """testing module"""
 import cmd
-from models.base_model import BaseModel
 from models import storage
-# from models.base_model import BaseModel
-
+from models.base_model import BaseModel
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """class handling command interpreter"""
@@ -14,12 +13,7 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         """Quit - command to exit the program
         """
-        exit()
-
-    def do_help(self, arg: str) -> bool | None:
-        """Help - command to display command help
-        """
-        return super().do_help(arg)
+        return True
 
     def do_EOF(self, line):
         """EOF - command to exit the program
