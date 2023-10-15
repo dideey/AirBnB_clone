@@ -12,32 +12,31 @@ from models.state import State
 
 class FileStorage:
     """FileStorage class"""
-    def __init__(self):
-        """initiation"""
-        self.__file_path = "file.json"
-        self.__objects = {}
+
+    __file_path = "file.json"
+    __objects = {}
 
     def all(self):
         """all function"""
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """new function"""
-        key = f"{obj.__class__.__name__}.{obj.id}"
-        self.__objects[key] = obj
+        key = obj.__class__.__name__+"."+obj.id
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """save function"""
         json_dict = {}
-        for key, value in self.__objects.items():
+        for key, value in FileStorage.__objects.items():
             json_dict[key] = value.to_dict()
-        with open(self.__file_path, mode="w", encoding="UTF8") as jfile:
+        with open(FileStorage.__file_path, mode="w", encoding="UTF8") as jfile:
             json.dump(json_dict, jfile)
 
     def reload(self):
         """reload function"""
         try:
-            with open(self.__file_path, mode="r", encoding="UTF8") as file:
+            with open(FileStorage.__file_path, mode="r", encoding="UTF8") as file:
                 jdata = json.load(file)
                 for value in jdata.values():
                     myModel = value["__class__"]
