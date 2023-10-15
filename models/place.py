@@ -1,8 +1,12 @@
 #!/usr/bin/python3
+"""Place class"""
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
-    def __init__ (self):
+    """Place class"""
+    def __init__(self):
+        """initiation"""
         self.city_id = "City.id"
         self.user_id = "User.id"
         self.name = ""
@@ -14,4 +18,3 @@ class Place(BaseModel):
         self.latitude = float
         self.longitude = float
         self.amenity_ids = []
-        
