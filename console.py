@@ -4,12 +4,19 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 
 class HBNBCommand(cmd.Cmd):
     """class handling command interpreter"""
     classes = ["BaseModel", "User", "State",
                "City", "Amenity", "Place", "Review"]
     prompt = '(hbnb)'
+
     def do_quit(self, line):
         """Quit - command to exit the program
         """
@@ -26,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Create - Creates a new instance of BaseModel,
-         saves it (to the JSON file) and prints the id. 
+         saves it (to the JSON file) and prints the id.
          Ex: $ create BaseModel
         """
         if (len(line) == 0):
@@ -103,9 +110,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
-        """Update - Updates an instance based on the class name and
-          id by adding or updating attribute (save the change into the JSON file).
-          Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com" """
+        """Update - Updates an instance based on the class name and id
+         by adding or updating attribute (save the change into the JSON file).
+         Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com" """
         print("update")
         if (len(line) == 0):
             print("** class name missing **")
@@ -138,11 +145,11 @@ class HBNBCommand(cmd.Cmd):
             value = getattr(objects[instance], attr)
             mtype = type(value)
             setattr(objects[instance], attr, mtype(attr_array[1]))
-        except:
+        except Exception:
             setattr(objects[instance], attr, attr_array[1])
         storage.save()
 
 
-
 if __name__ == '__main__':
+
     HBNBCommand().cmdloop()
