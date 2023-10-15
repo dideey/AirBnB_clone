@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """testing module"""
 import cmd
+import sys
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -15,7 +16,11 @@ class HBNBCommand(cmd.Cmd):
     """class handling command interpreter"""
     classes = ["BaseModel", "User", "State",
                "City", "Amenity", "Place", "Review"]
-    prompt = '(hbnb)'
+
+    if (sys.stdin.isatty()):
+        prompt = '(hbnb)'
+    else:
+        prompt = '(hbnb)\n'
 
     def do_quit(self, line):
         """Quit - command to exit the program
