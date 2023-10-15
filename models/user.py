@@ -7,7 +7,6 @@ class User(BaseModel):
     """User class"""
     def __init__(self):
         """initiation"""
-        super().__init__()
         self.email = ""
         self.password = ""
         self.first_name = ""
