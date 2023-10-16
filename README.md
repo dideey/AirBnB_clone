@@ -36,8 +36,7 @@ Documented commands (type help <topic>):
 EOF  all  create  destroy  help  quit  show  update
 
 (hbnb)
-****
-
+````
 **Exiting the program**
 When you want to exit the program, you can use one of the following methods:
 > **1: Enter "quit" or "EOF"**
