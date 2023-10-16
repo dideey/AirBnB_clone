@@ -34,7 +34,7 @@ class FileStorage:
                     json_dict[key] = value.to_dict()
                 json.dump(json_dict, jfile)
         except Exception:
-            Exception("OK")
+            pass
 
     def reload(self):
         """reload function"""
