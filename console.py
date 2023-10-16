@@ -2,6 +2,7 @@
 """testing module"""
 import cmd
 import sys
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -21,6 +22,26 @@ class HBNBCommand(cmd.Cmd):
         prompt = '(hbnb)'
     else:
         prompt = '(hbnb)\n'
+
+    def default(self, arg):
+        custom_cmd = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+        }
+        if '.' not in arg:
+            print("*** Unknown syntax: ", arg)
+            return
+        args = arg.split('.')
+        args[1] = str.replace(args[1], '()', '')
+        if args[0] == "":
+            print("** class name missing **")
+            return
+        if args[1] in custom_cmd.keys():
+            return custom_cmd[args[1]]("{}".format(args[0]))
+        else:
+            print("*** Unknown syntax: ", arg)
 
     def do_quit(self, line):
         """Quit - command to exit the program
@@ -98,6 +119,7 @@ class HBNBCommand(cmd.Cmd):
         """All - Prints all string representation of all instances
           based or not on the class name.
           Ex: $ all BaseModel or $ all"""
+        print(line)
         if (len(line) == 0):
             models = storage.all()
             list_models = []
