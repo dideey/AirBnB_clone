@@ -27,10 +27,10 @@ class FileStorage:
 
     def save(self):
         """save function"""
-        json_dict = {}
-        for key, value in FileStorage.__objects.items():
-            json_dict[key] = value.to_dict()
         with open(FileStorage.__file_path, mode="w", encoding="UTF8") as jfile:
+            json_dict = {}
+            for key, value in FileStorage.__objects.items():
+                json_dict[key] = value.to_dict()
             json.dump(json_dict, jfile)
 
     def reload(self):
