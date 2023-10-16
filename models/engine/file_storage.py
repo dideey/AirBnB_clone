@@ -36,7 +36,7 @@ class FileStorage:
     def reload(self):
         """reload function"""
         try:
-            with open(FileStorage.__file_path, mode="r", encoding="UTF8") as file:
+            with open(FileStorage.__file_path, "r", encoding="UTF8") as file:
                 jdata = json.load(file)
                 for value in jdata.values():
                     myModel = value["__class__"]
