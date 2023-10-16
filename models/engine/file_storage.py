@@ -13,7 +13,7 @@ from models.state import State
 class FileStorage:
     """FileStorage class"""
 
-    __file_path = "file.json"
+    __file_path = None
     __objects = {}
 
     def all(self):
@@ -27,11 +27,14 @@ class FileStorage:
 
     def save(self):
         """save function"""
-        with open(FileStorage.__file_path, mode="w", encoding="UTF8") as jfile:
-            json_dict = {}
-            for key, value in FileStorage.__objects.items():
-                json_dict[key] = value.to_dict()
-            json.dump(json_dict, jfile)
+        try:
+            with open(FileStorage.__file_path, mode="w", encoding="UTF8") as jfile:
+                json_dict = {}
+                for key, value in FileStorage.__objects.items():
+                    json_dict[key] = value.to_dict()
+                json.dump(json_dict, jfile)
+        except Exception:
+            Exception("OK")
 
     def reload(self):
         """reload function"""
