@@ -4,6 +4,7 @@ import unittest
 from console import HBNBCommand
 import cmd
 
+
 class TestConsole(unittest.TestCase):
     """console test"""
     def test_inheritance(self):

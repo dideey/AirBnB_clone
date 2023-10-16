@@ -110,7 +110,7 @@ class TestBaseModel(unittest.TestCase):
         model = BaseModel()
 
         model_dict = model.to_dict()
-        expected_keys = ('id', 'created_at', 'updated_at',"__class__")
+        expected_keys = ('id', 'created_at', 'updated_at', "__class__")
         self.assertCountEqual(model_dict.keys(), expected_keys)
 
         self.assertIsNotNone(model_dict['id'])
