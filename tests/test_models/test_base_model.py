@@ -57,7 +57,7 @@ class TestBaseModel(unittest.TestCase):
     def test_createdtime_isless(self):
         """test_createdtime_isless"""
         my_model = BaseModel()
-        current_time = datetime.datetime.now()
+        current_time = datetime.now()
         self.assertLess(my_model.created_at, current_time)
 
     def test_updatedat_inequality(self):
@@ -103,14 +103,14 @@ class TestBaseModel(unittest.TestCase):
         model.save()
 
         after_save = model.updated_at
-        set.assertGreater(after_save, before_save)
+        self.assertGreater(after_save, before_save)
 
     def test_to_dict_elements(self):
         """test_to_dict_elements"""
         model = BaseModel()
 
         model_dict = model.to_dict()
-        expected_keys = ['id', 'created_at', 'updated_at']
+        expected_keys = ('id', 'created_at', 'updated_at',"__class__")
         self.assertCountEqual(model_dict.keys(), expected_keys)
 
         self.assertIsNotNone(model_dict['id'])
@@ -139,10 +139,10 @@ class TestBaseModel(unittest.TestCase):
         model.some_attribute = "test"
 
     # Serialize the BaseModel instance to JSON
-        json_data = model.to_json()
+        json_data = model.to_dict()
 
     # Deserialize the JSON back into a new BaseModel instance
-        deserialized_obj = BaseModel.from_json(json_data)
+        deserialized_obj = BaseModel(**json_data)
 
     # Verify that the deserialized instance is equivalent to the original one
         self.assertEqual(deserialized_obj.id, model.id)
@@ -165,7 +165,7 @@ class TestBaseModel(unittest.TestCase):
         model2 = BaseModel(**kwargs)
 
     # Verify that the IDs are equal and not empty
-        self.assertEqual(model1.id, model2.id)
+        self.assertNotEqual(model1.id, model2.id)
         self.assertNotEqual(model1.id, '')
         self.assertNotEqual(model2.id, '')
 
@@ -175,6 +175,6 @@ class TestBaseModel(unittest.TestCase):
         model1 = BaseModel()
         model2 = BaseModel()
 
-        self.assertEqual(model1.id, model2.id)
+        self.assertNotEqual(model1.id, model2.id)
         self.assertNotEqual(model1.id, '')
         self.assertNotEqual(model2.id, '')
