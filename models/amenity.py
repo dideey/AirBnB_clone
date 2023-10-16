@@ -7,3 +7,6 @@ class Amenity(BaseModel):
     """Amenity class"""
 
     name = ""
+
+    def __init__(self):
+        self.name = ""
