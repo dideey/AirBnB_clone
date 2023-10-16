@@ -23,25 +23,25 @@ class FileStorage:
 
     def all(self):
         """all function"""
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """new function"""
         key = obj.__class__.__name__+"."+obj.id
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """save function"""
-        with open(FileStorage.__file_path, mode="w", encoding="UTF8") as jfile:
+        with open(self.__file_path, mode="w", encoding="UTF8") as jfile:
             json_dict = {}
-            for key, value in FileStorage.__objects.items():
+            for key, value in self.__objects.items():
                 json_dict[key] = value.to_dict()
             json.dump(json_dict, jfile)
 
     def reload(self):
         """reload function"""
         try:
-            with open(FileStorage.__file_path, "r", encoding="UTF8") as file:
+            with open(self.__file_path, "r", encoding="UTF8") as file:
                 jdata = json.load(file)
                 for value in jdata.values():
                     myModel = value["__class__"]
