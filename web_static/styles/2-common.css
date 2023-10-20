@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+    padding: 0%;
+}
+
+main {
+    min-height: calc(100vh - 130px);
+    background-color: white;
+}
